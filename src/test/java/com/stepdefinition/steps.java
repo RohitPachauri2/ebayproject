@@ -169,6 +169,16 @@ public class steps {
 	public void user_clicks_on_show_in_cart() throws InterruptedException {
 		System.out.println("Steps9-");
 	    WebElement cartbutton=driver.findElement(By.cssSelector("div[class='gh-flyout is-right-aligned gh-flyout--icon-target']>a"));
+	    
+	    Actions action=new Actions(driver);
+	    action.moveToElement(cartbutton).perform();//to hover over cartbutton
+	    Thread.sleep(Duration.ofSeconds(2));
+	    List<WebElement> cartele=driver.findElements(By.cssSelector("div.gh-minicart-body>div>a>div.gh-info>div>span"));
+	    System.out.println("elements in cart are:-");
+	    for(WebElement a:cartele) {
+	    	System.out.println(a.getText());
+	    }
+	    
 	    cartbutton.click();
 	    Thread.sleep(Duration.ofSeconds(2));
 	    Assert.assertTrue(driver.getCurrentUrl().contains("cart"));
