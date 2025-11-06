@@ -11,7 +11,8 @@ Feature: User should be able to login
     And user gets the list of all the mobiles phones
     Then user adds the item to cart
 
+@smoke
   Scenario: user is checking elements in cart
     Given cart is not empty
     When user clicks on show in cart
-    Then user see all the items added
+    Then user enters address credentials

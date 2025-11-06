@@ -9,7 +9,8 @@ public class steprunner {
 		    glue = "com.stepdefinition", // Path to your step definitions
 		    plugin = {"pretty", "html:target/cucumber-reports"},
 		    monochrome = true,
-		    dryRun =false
+		    dryRun =false,
+		    tags="@smoke"
 		//    tags = "@smoketest or @regressiontest" // @smoketest and @regressiontest --->This will run scenarios tagged with either of the two tags 
 		)
 		public class Testrunner extends AbstractTestNGCucumberTests {

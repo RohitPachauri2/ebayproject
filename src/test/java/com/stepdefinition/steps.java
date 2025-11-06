@@ -10,6 +10,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
@@ -58,8 +59,8 @@ public class steps {
 		try {
 			WebElement sgn = driver.findElement(By.id("sgnBt"));
 			sgn.click();
-			WebElement textme = driver.findElement(By.id("smsWithCode-title"));
-			textme.click();
+//			WebElement textme = driver.findElement(By.id("smsWithCode-title"));
+//			textme.click();
 			WebElement cnt1 = driver.findElement(By.id("send-button"));
 			cnt1.click();
 			Thread.sleep(Duration.ofSeconds(10));
@@ -160,8 +161,9 @@ public class steps {
 
 	}
 	@Given("cart is not empty")
-	public void cart_is_not_empty() {
+	public void cart_is_not_empty() throws InterruptedException {
 		System.out.println("Steps8-");
+		Thread.sleep(Duration.ofSeconds(10));
 	    String cartmessage=driver.findElement(By.cssSelector("span.gh-cart__icon")).getText();
 	    Assert.assertTrue(!cartmessage.equalsIgnoreCase("Your shopping cart contains 0 items"));
 	}
@@ -183,9 +185,23 @@ public class steps {
 	    Thread.sleep(Duration.ofSeconds(2));
 	    Assert.assertTrue(driver.getCurrentUrl().contains("cart"));
 	}
-	@Then("user see all the items added")
-	public void user_see_all_the_items_added() {
+	@Then("user enters address credentials")
+	public void user_enters_address_credentials() throws InterruptedException {
+		Thread.sleep(Duration.ofSeconds(5));
 		System.out.println("Steps10-");
+		WebElement address1=driver.findElement(By.id("address1"));
+		address1.sendKeys("addressdemo");
+		WebElement city=driver.findElement(By.id("city"));
+		city.sendKeys("citydemo");
+		WebElement state=driver.findElement(By.id("state"));
+		state.click();
+		Select select=new Select(state);
+		select.selectByIndex(5);
+		WebElement zip=driver.findElement(By.id("zip"));
+		zip.sendKeys("201310");
+		WebElement cont2=driver.findElement(By.id("FPA_UPGRADE_FORM_SUBMIT"));
+		cont2.click();
+		
 	   
 	}
 
