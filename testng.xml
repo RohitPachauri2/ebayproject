@@ -1,0 +1,14 @@
+
+<suite name="Suite">
+<listeners>
+<listener
+			class-name="com.stepdefinition.ITestListnerClass"></listener>
+</listeners>
+  <test thread-count="5" name="Test">
+  <classes>
+  <class name="com.stepdefinition.steprunner"></class>
+  
+  </classes>
+  
+  </test> <!-- Test -->
+</suite> <!-- Suite -->

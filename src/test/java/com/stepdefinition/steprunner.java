@@ -10,7 +10,7 @@ public class steprunner {
 		    plugin = {"pretty", "html:target/cucumber-reports"},
 		    monochrome = true,
 		    dryRun =false,
-		    tags="@smoke"
+		    tags="@new"
 		//    tags = "@smoketest or @regressiontest" // @smoketest and @regressiontest --->This will run scenarios tagged with either of the two tags 
 		)
 		public class Testrunner extends AbstractTestNGCucumberTests {

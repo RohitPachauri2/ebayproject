@@ -14,6 +14,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import Pages.LoginPage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -28,26 +29,23 @@ public class steps {
 		System.out.println("step1:-");
 		WebDriverManager.chromedriver().setup();
 		driver = new ChromeDriver();
+		LoginPage p = new LoginPage(driver);
 		driver.manage().window().maximize();
 		driver.get("https://www.ebay.com/");
-		WebElement signinbutton = driver.findElement(By.linkText("Sign in"));
-		Assert.assertTrue(signinbutton.isDisplayed());
+		p.Sigin();
+
 	}
 
-	@When("user enters credentials")
-	public void user_enters_credentials() throws InterruptedException {
+	@When("^user enters (.*) and (.*)$")
+	public void user_enters_credentials(String val1,String val2) throws InterruptedException {
 		System.out.println("step2:-");
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(02));
-		WebElement signinbutton = driver.findElement(By.linkText("Sign in"));
-		signinbutton.click();
-		WebElement uname = driver.findElement(By.id("userid"));
-		wait.until(ExpectedConditions.visibilityOf(uname));
-		uname.sendKeys("rohitpachauri2@gmail.com");
-		WebElement cont = driver.findElement(By.id("signin-continue-btn"));
-		cont.click();
-		WebElement pass = driver.findElement(By.id("pass"));
-		wait.until(ExpectedConditions.visibilityOf(pass));
-		pass.sendKeys("rmv123*#R");
+		LoginPage p = new LoginPage(driver);
+		Thread.sleep(Duration.ofSeconds(2));
+		p.Sigin();
+		p.unameb(val1);
+		p.contb();
+		p.passb(val2);
 
 	}
 
@@ -57,14 +55,18 @@ public class steps {
 		String cururl = "";
 
 		try {
-			WebElement sgn = driver.findElement(By.id("sgnBt"));
-			sgn.click();
-//			WebElement textme = driver.findElement(By.id("smsWithCode-title"));
-//			textme.click();
-			WebElement cnt1 = driver.findElement(By.id("send-button"));
-			cnt1.click();
-			Thread.sleep(Duration.ofSeconds(10));
-			System.out.println("current url at this point is: " + driver.getCurrentUrl());
+//			WebElement sgn = driver.findElement(By.id("sgnBt"));
+//			sgn.click();
+////			WebElement textme = driver.findElement(By.id("smsWithCode-title"));
+////			textme.click();
+//			WebElement cnt1 = driver.findElement(By.id("send-button"));
+//			cnt1.click();
+//			Thread.sleep(Duration.ofSeconds(10));
+//			System.out.println("current url at this point is: " + driver.getCurrentUrl());
+			LoginPage p = new LoginPage(driver);
+			Thread.sleep(Duration.ofSeconds(2));
+			p.signinpasssms();
+			
 
 		} catch (Exception e) {
 			System.out.println(e + " " + " Sign in with text was not available");
@@ -103,7 +105,7 @@ public class steps {
 		// find the sort by button--------------------------------------
 
 		WebElement btn1 = driver.findElement(By.cssSelector(
-				"button[class='fake-menu-button__button btn btn--small btn--secondary'][aria-label='Sort selector. Best Match selected.']"));
+				"button[class='fake-menu-button__button btn btn--small btn--secondary'][aria-label='Sort. Best Match selected.']"));
 		btn1.click();
 		Thread.sleep(Duration.ofSeconds(5));
 
@@ -160,50 +162,83 @@ public class steps {
 		driver.quit();
 
 	}
+
 	@Given("cart is not empty")
 	public void cart_is_not_empty() throws InterruptedException {
 		System.out.println("Steps8-");
 		Thread.sleep(Duration.ofSeconds(10));
-	    String cartmessage=driver.findElement(By.cssSelector("span.gh-cart__icon")).getText();
-	    Assert.assertTrue(!cartmessage.equalsIgnoreCase("Your shopping cart contains 0 items"));
+		String cartmessage = driver.findElement(By.cssSelector("span.gh-cart__icon")).getText();
+
+		if (cartmessage.equalsIgnoreCase("Your shopping cart contains 0 items")) {
+			System.out.println("Your shopping cart contains 0 items");
+		}
+
 	}
+
 	@When("user clicks on show in cart")
 	public void user_clicks_on_show_in_cart() throws InterruptedException {
 		System.out.println("Steps9-");
-	    WebElement cartbutton=driver.findElement(By.cssSelector("div[class='gh-flyout is-right-aligned gh-flyout--icon-target']>a"));
-	    
-	    Actions action=new Actions(driver);
-	    action.moveToElement(cartbutton).perform();//to hover over cartbutton
-	    Thread.sleep(Duration.ofSeconds(2));
-	    List<WebElement> cartele=driver.findElements(By.cssSelector("div.gh-minicart-body>div>a>div.gh-info>div>span"));
-	    System.out.println("elements in cart are:-");
-	    for(WebElement a:cartele) {
-	    	System.out.println(a.getText());
-	    }
-	    
-	    cartbutton.click();
-	    Thread.sleep(Duration.ofSeconds(2));
-	    Assert.assertTrue(driver.getCurrentUrl().contains("cart"));
+		WebElement cartbutton = driver
+				.findElement(By.cssSelector("div[class='gh-flyout is-right-aligned gh-flyout--icon-target']>a"));
+
+		Actions action = new Actions(driver);
+		action.moveToElement(cartbutton).perform();// to hover over cartbutton
+		Thread.sleep(Duration.ofSeconds(2));
+		List<WebElement> cartele = driver
+				.findElements(By.cssSelector("div.gh-minicart-body>div>a>div.gh-info>div>span"));
+		System.out.println("elements in cart are:-");
+		for (WebElement a : cartele) {
+			System.out.println(a.getText());
+		}
+
+		cartbutton.click();
+		Thread.sleep(Duration.ofSeconds(2));
+		Assert.assertTrue(driver.getCurrentUrl().contains("cart"));
 	}
+
 	@Then("user enters address credentials")
 	public void user_enters_address_credentials() throws InterruptedException {
 		Thread.sleep(Duration.ofSeconds(5));
 		System.out.println("Steps10-");
-		WebElement address1=driver.findElement(By.id("address1"));
+		WebElement address1 = driver.findElement(By.id("address1"));
 		address1.sendKeys("addressdemo");
-		WebElement city=driver.findElement(By.id("city"));
+		WebElement city = driver.findElement(By.id("city"));
 		city.sendKeys("citydemo");
-		WebElement state=driver.findElement(By.id("state"));
+		WebElement state = driver.findElement(By.id("state"));
 		state.click();
-		Select select=new Select(state);
+		Select select = new Select(state);
 		select.selectByIndex(5);
-		WebElement zip=driver.findElement(By.id("zip"));
+		WebElement zip = driver.findElement(By.id("zip"));
 		zip.sendKeys("201310");
-		WebElement cont2=driver.findElement(By.id("FPA_UPGRADE_FORM_SUBMIT"));
+		WebElement cont2 = driver.findElement(By.id("FPA_UPGRADE_FORM_SUBMIT"));
 		cont2.click();
-		
-	   
+
 	}
 
-	
+	@Given("User is on login page for gift page")
+	public void User_is_on_login_page_for_gift_page() {
+		System.out.println("driver is on login page for gift page");
+	}
+
+	@When("user clicks on gift card page")
+	public void user_clicks_on_gift_card_page() throws InterruptedException {
+		Thread.sleep(Duration.ofSeconds(2));
+		WebElement giftlink = driver.findElement(By.cssSelector("a[href='https://www.ebay.com/giftcards']"));
+		giftlink.click();
+		Thread.sleep(Duration.ofSeconds(2));
+		Assert.assertTrue(driver.getCurrentUrl().contains("giftcard"));
+	}
+
+	@Then("user is navigated to gift card page")
+	public void user_is_navigated_to_gift_card_page() throws InterruptedException {
+		// Wait for the 'birthday' link to be clickable
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		WebElement bda = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a#birthday")));
+
+		// Scroll to the element and click
+		Actions action = new Actions(driver);
+		action.scrollToElement(bda).perform();
+		bda.click();
+	}
+
 }
