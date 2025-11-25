@@ -11,8 +11,8 @@
           <include name="setUpClass"/>
           <include name="setUp"/>
           <include name="tearDown"/>
-          <include name="runScenario" invocation-numbers="0 1"/>
           <include name="tearDownClass"/>
+          <include name="runScenario" invocation-numbers="0 1"/>
         </methods>
       </class> <!-- com.stepdefinition.steprunner -->
     </classes>

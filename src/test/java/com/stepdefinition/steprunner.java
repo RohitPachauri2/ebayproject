@@ -7,7 +7,7 @@ import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 
 @CucumberOptions(features = "src/test/resources/function.feature", glue = "com.stepdefinition", plugin = { "pretty",
-		"html:target/cucumber-reports" }, monochrome = true, dryRun = false, tags = "@new")
+		"html:target/cucumber-reports" }, monochrome = true, dryRun = false, tags = "@latest")
 public class steprunner extends AbstractTestNGCucumberTests {
 
 	@BeforeSuite
